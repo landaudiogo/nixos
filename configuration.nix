@@ -87,11 +87,9 @@
       firefox
     #  thunderbird
       lunarvim
-      stremio
       google-chrome
       tmux
       alacritty
-      git
       zsh
       eza
       rustc
