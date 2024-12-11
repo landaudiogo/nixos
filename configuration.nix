@@ -84,22 +84,8 @@
     description = "Diogo Landau";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
-      lunarvim
-      google-chrome
-      alacritty
-      zsh
-      eza
-      rustc
-      cargo
-      rustfmt
-      rust-analyzer
-      clang
-      clippy
-      xclip
-      gnumake
       texliveFull
-      unzip
+      google-chrome
     ];
   };
 
@@ -113,6 +99,7 @@
     wget
     ntfs3g
     home-manager
+    unzip
   ];
   services.xserver.dpi = 180;
   environment.variables = {
