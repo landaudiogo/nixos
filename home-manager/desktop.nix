@@ -5,6 +5,6 @@
         stremio
         alacritty
         firefox
-        zsh
+        google-chrome
     ];
 }

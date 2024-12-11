@@ -85,7 +85,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       texliveFull
-      google-chrome
     ];
   };
 
@@ -143,13 +142,6 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     fira-code
   ];
-  home-manager.users.landaudiogo = { pkgs, ... }: {
-    home.packages = [ pkgs.atool pkgs.httpie ];
-    programs.bash.enable = true;
-
-    # The state version is required and should stay at the version you
-    # originally installed.
-    home.stateVersion = "24.05";
-  };
+  home-manager.users.landaudiogo = import ./home-manager/home.nix;
 
 }
