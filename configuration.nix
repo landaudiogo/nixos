@@ -59,7 +59,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -78,6 +77,8 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  services.logind.lidSwitch = "ignore";
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.landaudiogo = {
     isNormalUser = true;
@@ -94,17 +95,15 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     ntfs3g
     home-manager
     unzip
+    file
+    bash
+    wireshark
   ];
-  services.xserver.dpi = 180;
-  environment.variables = {
-    GDK_SCALE = "2";
-    GDK_DPI_SCALE = "2";
-  };
 
   programs.git.config = {
     user.email = "diogo.hewitt.landau@hotmail.com";

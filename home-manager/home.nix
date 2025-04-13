@@ -31,16 +31,20 @@
     home.packages = with pkgs; [
         zsh
         lunarvim
+        rustup
         rustc
-        cargo
-        rustfmt
-        rust-analyzer
+        musl
+        llvm
+        pkg-config
+        openssl
+        openssl.dev
         clang
-        clippy
+        elfutils
 
         eza
         xclip
         gnumake
+        patchelf
     ];
 
     # Let Home Manager install and manage itself.
