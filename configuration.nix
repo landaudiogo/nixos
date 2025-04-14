@@ -55,6 +55,8 @@
     };
   };
 
+  virtualisation.docker.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -83,7 +85,7 @@
   users.users.landaudiogo = {
     isNormalUser = true;
     description = "Diogo Landau";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       texliveFull
     ];
