@@ -31,33 +31,32 @@
                 white = "#ECEFF4";
             };
 
-            shell = {
-                program = "${pkgs.zsh}/bin/zsh";
-                args = ["--login"];
+            terminal.shell = {
+                program = "${pkgs.tmux}/bin/tmux";
             };
 
             font = {
               normal = {
-                family = "CaskaydiaCove Nerd Font";
+                family = "FiraCode Nerd Font";
                 style = "Regular";
               };
 
               bold = {
-                family = "CaskaydiaCove Nerd Font";
+                family = "FiraCode Nerd Font";
                 style = "Bold";
               };
 
               italic = {
-                family = "CaskaydiaCove Nerd Font";
+                family = "FiraCode Nerd Font";
                 style = "Italic";
               };
 
               bold_italic = {
-                family = "CaskaydiaCove Nerd Font";
+                family = "FiraCode Nerd Font";
                 style = "Bold Italic";
               };
 
-              size = 7.5;
+              size = 10;
             };
 
 
@@ -67,10 +66,6 @@
                 x = 2;
                 y = 2;
               };
-
-              history = 20000;
-              save_to_clipboard = true;
-              live_config_reload = true;
             };
 
             key_bindings = [
