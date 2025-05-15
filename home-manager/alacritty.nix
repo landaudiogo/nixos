@@ -4,6 +4,14 @@
     programs.alacritty = {
         enable = true;
         settings = {
+            keyboard.bindings = [
+                {
+                    key = "N";
+                    mods = "Control";
+                    action = "SpawnNewInstance";
+                }
+            ];
+
             colors.primary = {
                 background = "#1E1E1E";
                 foreground = "#D8DEE9";
@@ -32,7 +40,7 @@
             };
 
             terminal.shell = {
-                program = "${pkgs.tmux}/bin/tmux";
+                program = "${pkgs.zsh}/bin/zsh";
             };
 
             font = {
