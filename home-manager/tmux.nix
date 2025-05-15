@@ -5,8 +5,9 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     historyLimit = 100000;
-    plugins = with pkgs; [
-        tmuxPlugins.yank
+    plugins = with pkgs.tmuxPlugins; [
+        yank
+        power-theme
     ];
     extraConfig = ''
         # Set prefix to space.
@@ -50,14 +51,6 @@
         # Intuitive window-splitting keys.
         bind | split-window -h -c '#{pane_current_path}' # normally prefix-%
         bind - split-window -v -c '#{pane_current_path}' # normally prefix-"
-
-        # Status bar.
-        set -g status-bg '#343d46'
-        set -g status-fg white
-        set -g status-left-length 40
-        set -g status-left '#[fg=yellow]#S ⧉ '
-        set -g status-right "#[fg=yellow]$USER@#h #[fg=magenta]%l:%M %p"
-        set -g status-interval 60 # Default is 15.
 
         # Automatically renumber window numbers on closing a pane (tmux >= 1.7).
         set -g renumber-windows on
