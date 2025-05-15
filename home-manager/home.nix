@@ -6,6 +6,8 @@
         ./tmux.nix 
         ./git.nix
         ./desktop.nix
+        ./lvim.nix
+        ./zsh.nix
     ];
 
     nixpkgs = {
@@ -31,21 +33,8 @@
     home.stateVersion = "24.05";
     home.packages = with pkgs; [
         zsh
-        lunarvim
-        rustup
-        rustc
-        musl
-        llvm
-        pkg-config
-        openssl
-        openssl.dev
-        clang
-        elfutils
-
         eza
         xclip
-        gnumake
-        patchelf
     ];
 
     # Let Home Manager install and manage itself.
