@@ -67,13 +67,6 @@
                 y = 2;
               };
             };
-
-            key_bindings = [
-              { key = "V"; mods = "Control|Shift"; action = "Paste"; }
-              { key = "C"; mods = "Control|Shift"; action = "Copy"; }
-              { key = "Equals"; mods = "Control"; action = "IncreaseFontSize"; }
-              { key = "Minus"; mods = "Control"; action = "DecreaseFontSize"; }
-            ];
         };
     };
 }

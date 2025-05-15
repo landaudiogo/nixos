@@ -5,31 +5,20 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     historyLimit = 100000;
-    plugins = with pkgs;
-      [
+    plugins = with pkgs; [
         tmuxPlugins.yank
-      ];
+    ];
     extraConfig = ''
         # Set prefix to space.
         unbind C-b
         set -g prefix C-Space
 
-        set-option -g default-shell ${pkgs.zsh}/bin/zsh
-
         # tmux copy mode vim bindings
         setw -g mode-keys vi
-
-        # Bindings:
-        # - to see current bindings:
-        #   list-keys -t {vi,emacs}-{edit,choice,copy}
 
         # Open new/split panes with the path of the current pane.
         unbind c
         bind c new-window -c '#{pane_current_path}'
-        unbind %
-        bind % split-window -h -c '#{pane_current_path}'
-        unbind '"'
-        bind '"' split-window -v -c '#{pane_current_path}'
 
         # Vim-like key bindings for pane navigation (default uses cursor keys).
         unbind h
@@ -60,7 +49,6 @@
 
         # Intuitive window-splitting keys.
         bind | split-window -h -c '#{pane_current_path}' # normally prefix-%
-        # bind \ split-window -h -c '#{pane_current_path}' # normally prefix-%
         bind - split-window -v -c '#{pane_current_path}' # normally prefix-"
 
         # Status bar.
@@ -73,9 +61,6 @@
 
         # Automatically renumber window numbers on closing a pane (tmux >= 1.7).
         set -g renumber-windows on
-
-        # Highlight active window.
-        # set -w -g window-status-current-bg red
 
         # Mouse can be used to select panes, select windows (by clicking on the status
         # bar), resize panes. For default bindings see `tmux list-keys` and `tmux
@@ -108,9 +93,7 @@
         set -w -g main-pane-width 85
 
         set -g default-terminal "tmux-256color"
-        set -ga terminal-overrides ',xterm-256color:Tc'
-
-        set -g history-limit 10000
+        set-option -ga terminal-overrides '*:Tc'
 
         # Start window and pane numbering at 1, (0 is too hard to reach).
         set -g base-index 1
@@ -121,6 +104,9 @@
 
         # Dynamically update iTerm tab and window titles.
         set -g set-titles on
+        # #S      = session name
+        # #W      = tmux window name
+        set -g set-titles-string "[#h] #S > #W"
 
         # Needed as on tmux 1.9 and up (defaults to off).
         # Added in tmux commit c7a121cfc0137c907b7bfb.
@@ -133,24 +119,8 @@
         # position info in copy mode.
         set -w -g wrap-search off
 
-        # #T      = standard window title (last command, see ~/.bash_profile)
-        # #h      = short hostname
-        # #S      = session name
-        # #W      = tmux window name
-        #
-        # (Would love to include #(pwd) here as well, but that would only print the
-        # current working directory relative to the session -- ie. always the starting
-        # cwd -- which is not very interesting).
-        set -g set-titles-string "#T : #h > #S > #W"
-
-        # Show bells in window titles.
-        # set -g window-status-bell-style fg=yellow,bold,underscore
-
         # Clipper.
         bind-key y run-shell "tmux save-buffer - | xclip -selection clipboard"
-
-        # Load plugins
-        ${lib.concatStrings (map (x: "run-shell ${x.rtp}\n") [pkgs.tmuxPlugins.yank])}
     '';
   };
 }
