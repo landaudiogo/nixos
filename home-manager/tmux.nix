@@ -48,6 +48,12 @@
         # Fast toggle (normally prefix-l).
         bind ^space last-window
 
+        # Active pane: brighter background with normal foreground
+        set -g window-active-style 'fg=default,bg=colour234'
+
+        # Inactive pane: dark grey background, dimmed text
+        set -g window-style 'fg=default,bg=colour235'
+
         # Intuitive window-splitting keys.
         bind | split-window -h -c '#{pane_current_path}' # normally prefix-%
         bind - split-window -v -c '#{pane_current_path}' # normally prefix-"
