@@ -31,8 +31,8 @@
       -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
       lvim.leader = ","
       -- add your own keymapping
-      lvim.keys.normal_mode["<C-k>"] = "gk"
-      lvim.keys.normal_mode["<C-j>"] = "gj"
+      lvim.keys.normal_mode["<M-k>"] = "gk"
+      lvim.keys.normal_mode["<M-j>"] = "gj"
       lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
       lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
       lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
