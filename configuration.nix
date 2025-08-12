@@ -41,7 +41,7 @@
 
   services.printing.enable = true;
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -85,5 +85,22 @@
     nerd-fonts.droid-sans-mono
   ];
 
-  home-manager.users.landaudiogo = import ./home-manager/home.nix;
+  home-manager.useGlobalPkgs = true;
+  home-manager.users.landaudiogo = 
+    { pkgs, ... }:
+    {
+        imports = [ 
+            ./home-manager
+        ];
+
+        home.username = "landaudiogo";
+        home.homeDirectory = "/home/landaudiogo";
+        home.stateVersion = "25.05";
+
+        role.gui.enable = true;
+        role.gui.browse = true;
+        role.gui.pdfViewer = true;
+        role.gui.mediaPlayer = true;
+        role.dev.enable = true;
+    };
 }
