@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -61,12 +61,20 @@
   programs.zsh.enable = true;
 
   system.stateVersion = "22.11"; # Did you read the comment?
+
+  age.secrets.landaudiogo-ed25519 = {
+    file = ../../secrets/landaudiogo-ed25519.age;
+    path = "/home/landaudiogo/.ssh/id_ed25519";
+    owner = "landaudiogo";
+  };
+  
   
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
     { pkgs, ... }:
     {
         imports = [ 
+            inputs.agenix.homeManagerModules.default
             ../../home-manager
             ./home-manager
         ];
@@ -74,6 +82,7 @@
         home.username = "landaudiogo";
         home.homeDirectory = "/home/landaudiogo";
         home.stateVersion = "25.05";
+        home.file.".ssh/id_ed25519.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1COVqebDaCGC+bD3A7MgmFYMf5lMrHDUz+MBUn/oej landaudiogo";
 
         role.dev.enable = true;
     };

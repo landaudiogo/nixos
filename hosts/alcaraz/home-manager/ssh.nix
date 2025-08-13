@@ -1,5 +1,10 @@
-{ pkgs, ... }: 
+{ pkgs, config, ... }: 
 {
+    # age.secrets.landaudiogo-ed25519 = {
+    #     file = ../../../secrets/landaudiogo-ed25519.age;
+    #     path = "${config.xdg.configHome}/.ssh/id_ed25519";
+    # };
+    # home.file."${config.xdg.configHome}/.ssh/id_ed25519.pub" = ;
     programs.ssh = {
         enable = true;
         matchBlocks = {

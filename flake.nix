@@ -35,7 +35,7 @@
                 };
 
                 alcaraz = nixpkgs.lib.nixosSystem {
-                    # specialArgs = { inherit inputs; };
+                    specialArgs = { inherit inputs; };
                     modules = [
                         ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
                         home-manager.nixosModules.default
