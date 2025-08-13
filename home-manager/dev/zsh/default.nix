@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
     programs.zsh = {
-        enable = true;
         autocd = true;
         plugins = [
             {
@@ -11,14 +10,14 @@
             }
             {
                 name = "p10k-config";
-                src = ./p10k-config;
+                src = ./p10k;
                 file = "p10k.sh";
             }
         ];
         syntaxHighlighting.enable = true;
         enableCompletion = true;
         autosuggestion.enable = true;
-        initExtraFirst = ''
+        initContent = ''
             export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
             export HISTIGNORE="pwd:ls:cd"
             export EDITOR="lvim"
