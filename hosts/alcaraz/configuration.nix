@@ -68,7 +68,6 @@
     owner = "landaudiogo";
   };
   
-  
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
     { pkgs, ... }:
