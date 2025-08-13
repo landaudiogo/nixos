@@ -44,6 +44,17 @@
                         ./hosts/alcaraz/configuration.nix
                     ];
                 };
+
+                federer = nixpkgs.lib.nixosSystem {
+                    # specialArgs = { inherit inputs; };
+                    modules = [
+                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        home-manager.nixosModules.default
+                        agenix.nixosModules.default
+                        ./modules/nixos
+                        ./hosts/federer/configuration.nix
+                    ];
+                };
             };
         };
 }
