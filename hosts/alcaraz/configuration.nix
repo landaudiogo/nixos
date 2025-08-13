@@ -9,15 +9,11 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "djokovic"; # Define your hostname.
+  networking.hostName = "alcaraz"; # Define your hostname.
   networking.networkmanager.enable = true;
 
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-  
   services.printing.enable = true;
   services.logind.lidSwitch = "ignore";
   services.xserver.enable = true;
@@ -36,11 +32,19 @@
     hostKeys = [{
       path = "/etc/ssh/ssh_host_ed25519_key";
       type = "ed25519";
-      comment = "djokovic";
+      comment = "alcaraz";
     }];
   };
 
   virtualisation.docker.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.landaudiogo = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "Diogo Landau";
+    extraGroups = [ "networkmanager" "wheel" "docker"];
+  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -54,27 +58,17 @@
     wireguard-tools
   ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  programs.zsh.enable = true;
+
   system.stateVersion = "22.11"; # Did you read the comment?
-
-  users.users.landaudiogo = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    description = "Diogo Landau";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
-  };
-
+  
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
     { pkgs, ... }:
     {
         imports = [ 
             ../../home-manager
+            ./home-manager
         ];
 
         home.username = "landaudiogo";

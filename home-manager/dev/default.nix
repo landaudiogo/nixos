@@ -7,6 +7,7 @@ in
         ./git.nix
         ./lvim.nix
         ./tmux.nix 
+        ./direnv.nix
         ./zsh
         ./../gui/alacritty.nix
     ];

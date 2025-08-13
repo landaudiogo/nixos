@@ -22,15 +22,28 @@
                 };
             };
         in rec {
-            nixosConfigurations.djokovic = nixpkgs.lib.nixosSystem {
-                # specialArgs = { inherit inputs; };
-                modules = [
-                    ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-                    home-manager.nixosModules.default
-                    agenix.nixosModules.default
-                    ./modules/nixos
-                    ./hosts/djokovic/configuration.nix
-                ];
+            nixosConfigurations = {
+                djokovic = nixpkgs.lib.nixosSystem {
+                    # specialArgs = { inherit inputs; };
+                    modules = [
+                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        home-manager.nixosModules.default
+                        agenix.nixosModules.default
+                        ./modules/nixos
+                        ./hosts/djokovic/configuration.nix
+                    ];
+                };
+
+                alcaraz = nixpkgs.lib.nixosSystem {
+                    # specialArgs = { inherit inputs; };
+                    modules = [
+                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        home-manager.nixosModules.default
+                        agenix.nixosModules.default
+                        ./modules/nixos
+                        ./hosts/alcaraz/configuration.nix
+                    ];
+                };
             };
         };
 }
