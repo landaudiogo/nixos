@@ -1,0 +1,4 @@
+{ ... }: 
+{
+    imports = [ ./locale.nix ];
+}

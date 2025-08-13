@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./wireguard.nix
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -13,34 +13,12 @@
 
   # networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
-
-  time.timeZone = "Europe/Amsterdam";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "nl_NL.UTF-8";
-    LC_IDENTIFICATION = "nl_NL.UTF-8";
-    LC_MEASUREMENT = "nl_NL.UTF-8";
-    LC_MONETARY = "nl_NL.UTF-8";
-    LC_NAME = "nl_NL.UTF-8";
-    LC_NUMERIC = "nl_NL.UTF-8";
-    LC_PAPER = "nl_NL.UTF-8";
-    LC_TELEPHONE = "nl_NL.UTF-8";
-    LC_TIME = "nl_NL.UTF-8";
-  };
-
-  services.xserver.enable = true;
-
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager = {
-    gnome = {
-      enable = true;
-    };
-  };
-
-  virtualisation.docker.enable = true;
-
+  
   services.printing.enable = true;
-
+  services.logind.lidSwitch = "ignore";
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -49,17 +27,16 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  services.logind.lidSwitch = "ignore";
-
-  users.users.landaudiogo = {
-    isNormalUser = true;
-    description = "Diogo Landau";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
-    packages = [ ];
+  services.openssh = {
+    enable = true;
+    hostKeys = [{
+      path = "/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+      comment = "djokovic";
+    }];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
@@ -85,22 +62,24 @@
     nerd-fonts.droid-sans-mono
   ];
 
+  users.users.landaudiogo = {
+    isNormalUser = true;
+    description = "Diogo Landau";
+    extraGroups = [ "networkmanager" "wheel" "docker"];
+  };
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
     { pkgs, ... }:
     {
         imports = [ 
-            ./home-manager
+            ../../home-manager
         ];
 
         home.username = "landaudiogo";
         home.homeDirectory = "/home/landaudiogo";
         home.stateVersion = "25.05";
 
-        role.gui.enable = true;
-        role.gui.browse = true;
-        role.gui.pdfViewer = true;
-        role.gui.mediaPlayer = true;
         role.dev.enable = true;
     };
 }

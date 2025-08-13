@@ -6,9 +6,13 @@
             url = "github:nix-community/home-manager/release-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        agenix = {
+            url = "github:ryantm/agenix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }@inputs:
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix }@inputs:
         let
             system = "x86_64-linux";
             overlay-unstable = final: prev: {
@@ -19,11 +23,13 @@
             };
         in rec {
             nixosConfigurations.djokovic = nixpkgs.lib.nixosSystem {
-                specialArgs = { inherit inputs; };
+                # specialArgs = { inherit inputs; };
                 modules = [
                     ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
                     home-manager.nixosModules.default
-                    ./configuration.nix
+                    agenix.nixosModules.default
+                    ./modules/nixos
+                    ./hosts/djokovic/configuration.nix
                 ];
             };
         };

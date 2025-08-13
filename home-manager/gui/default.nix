@@ -1,11 +1,9 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, nixosConfig, ...}:
 let
     cfg = config.role.gui;
 in
 {
     options.role.gui = {
-        enable = lib.mkEnableOption "Enable GUI applications";
-
         browse = lib.mkOption {
             type = lib.types.bool;
             default = true;
@@ -43,7 +41,7 @@ in
     };
 
     # imports = [./];
-    config = lib.mkIf cfg.enable {
+    config = lib.mkIf nixosConfig.services.xserver.enable {
         home.packages = with pkgs; [ 
             eza
             xclip
