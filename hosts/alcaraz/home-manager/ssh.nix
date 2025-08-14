@@ -3,6 +3,13 @@
     programs.ssh = {
         enable = true;
         matchBlocks = {
+            djokovic = {
+                user = "landaudiogo";
+                hostname = "10.0.0.5";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
+                identitiesOnly = true;
+            };
             federer = {
                 user = "landaudiogo";
                 hostname = "10.0.0.1";

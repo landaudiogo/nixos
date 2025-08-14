@@ -73,8 +73,10 @@
   ];
 
   users.users."landaudiogo".openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOPcr9mpt8Y0QzHgBWhQ2kJs5NppvJ1N8Q6rnJ8Cfatl landaudiogo@nixos" # content of authorized_keys file
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1COVqebDaCGC+bD3A7MgmFYMf5lMrHDUz+MBUn/oej landaudiogo@nixos"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1COVqebDaCGC+bD3A7MgmFYMf5lMrHDUz+MBUn/oej landaudiogo"
+  ];
+  users.users."root".openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWjd0HS5ustz5grB4u8vtQcz1aINzESPu1ybrN+u6dy root"
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?

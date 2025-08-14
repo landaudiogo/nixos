@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/nixos
     ./wireguard.nix
   ];
 
@@ -35,6 +36,22 @@
       comment = "alcaraz";
     }];
   };
+  programs.ssh = {
+    extraConfig = ''
+        Host root-federer
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 10.0.0.1
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host root-djokovic
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 10.0.0.5
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+    '';
+  };
 
   virtualisation.docker.enable = true;
 
@@ -61,6 +78,15 @@
   programs.zsh.enable = true;
 
   system.stateVersion = "22.11"; # Did you read the comment?
+
+  age.secrets.root-ed25519 = {
+    file = ../../secrets/root-ed25519.age;
+    path = "/etc/root/.ssh/id_ed25519";
+    owner = "landaudiogo";
+  };
+  environment.etc = {
+    "root/.ssh/id_ed25519.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWjd0HS5ustz5grB4u8vtQcz1aINzESPu1ybrN+u6dy root";
+  };
 
   age.secrets.landaudiogo-ed25519 = {
     file = ../../secrets/landaudiogo-ed25519.age;
