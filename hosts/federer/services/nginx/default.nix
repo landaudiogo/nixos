@@ -29,9 +29,11 @@ in
         };
         systemd.services.docker-nginx.after = [ 
             "acme-finished-flatnotes.ad.dlandau.nl.target" 
+            "acme-finished-paperless.ad.dlandau.nl.target" 
         ];
         systemd.services.docker-nginx.requires = [ 
             "acme-finished-flatnotes.ad.dlandau.nl.target" 
+            "acme-finished-paperless.ad.dlandau.nl.target" 
         ];
 
         age.secrets.lego-pdns.file = ../../../../secrets/lego-pdns.age;
@@ -40,6 +42,13 @@ in
         security.acme.certs = {
             "flatnotes.ad.dlandau.nl" = {
                 domain = "flatnotes.ad.dlandau.nl";
+                dnsProvider = "pdns";
+                environmentFile = config.age.secrets.lego-pdns.path;
+                # We don't need to wait for propagation since this is a local DNS server
+                dnsPropagationCheck = false;
+            };
+            "paperless.ad.dlandau.nl" = {
+                domain = "paperless.ad.dlandau.nl";
                 dnsProvider = "pdns";
                 environmentFile = config.age.secrets.lego-pdns.path;
                 # We don't need to wait for propagation since this is a local DNS server

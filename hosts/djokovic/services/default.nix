@@ -1,4 +1,4 @@
 {...}:
 {
-    imports = [ ./flatnotes ];
+    imports = [ ./flatnotes ./paperless ];
 }
