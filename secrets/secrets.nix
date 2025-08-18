@@ -11,5 +11,7 @@ in
     "federer-wireguard.age".publicKeys = [ federer ];
     "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer ];
     "root-ed25519.age".publicKeys = [ alcaraz ];
+    "pdns-api-key.age".publicKeys = [ federer landaudiogo ];
+    "pdns-env.age".publicKeys = [ federer landaudiogo ];
+    "lego-pdns.age".publicKeys = [ federer landaudiogo ];
 }
-
