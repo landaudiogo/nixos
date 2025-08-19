@@ -12,6 +12,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  virtualisation.docker.enable = true;
+
   networking.hostName = "alcaraz"; # Define your hostname.
   networking.networkmanager.enable = true;
 
