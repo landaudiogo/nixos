@@ -66,6 +66,13 @@ in
                 # We don't need to wait for propagation since this is a local DNS server
                 dnsPropagationCheck = false;
             };
+            "ha.ad.dlandau.nl" = {
+                domain = "ha.ad.dlandau.nl";
+                dnsProvider = "pdns";
+                environmentFile = config.age.secrets.lego-pdns.path;
+                # We don't need to wait for propagation since this is a local DNS server
+                dnsPropagationCheck = false;
+            };
         };
     };
 }
