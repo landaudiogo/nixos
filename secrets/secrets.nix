@@ -16,4 +16,5 @@ in
     "lego-pdns.age".publicKeys = [ federer landaudiogo ];
     "flatnotes.age".publicKeys = [ djokovic landaudiogo ];
     "paperless-env.age".publicKeys = [ djokovic landaudiogo ];
+    "landau-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
 }

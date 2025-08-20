@@ -48,6 +48,11 @@ in
                     publicKey = publicKeys.djokovic;
                     allowedIPs = [ "10.0.0.5/32" ];
                 }
+                { 
+                    # landau Iphone
+                    publicKey = publicKeys.diogoIphone;
+                    allowedIPs = [ "10.0.0.6/32" ];
+                }
             ];
         };
     };
