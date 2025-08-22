@@ -18,4 +18,5 @@ in
     "paperless-env.age".publicKeys = [ djokovic landaudiogo ];
     "landau-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
+    "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
 }

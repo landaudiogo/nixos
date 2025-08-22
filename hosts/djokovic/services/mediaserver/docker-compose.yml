@@ -1,0 +1,137 @@
+name: mediaserver
+services:
+  # <media_service> is used to serve your media to the client devices
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/media:/data
+      - /var/lib/mediaserver/install/config/jellyfin:/config
+    ports: # plex
+      - 10.0.0.5:8096:8096 # plex
+    restart: unless-stopped
+
+  # qBitorrent is used to download torrents
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.3
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - WEBUI_PORT=8081
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/media:/data
+      - /var/lib/mediaserver/install/config/qbittorrent:/config
+    restart: unless-stopped
+    # ports: # qbittorrent
+    #   - 8081:8081 # qbittorrent
+    network_mode: "service:gluetun"
+
+  # Sonarr is used to query, add downloads to the download queue and index TV shows
+  # https://sonarr.tv/
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/media:/data
+      - /var/lib/mediaserver/install/config/sonarr:/config
+    # ports:
+    #   - 8989:8989
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  # Radarr is used to query, add downloads to the download queue and index Movies
+  # https://radarr.video/
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/media:/data
+      - /var/lib/mediaserver/install/config/radarr:/config
+    # ports:
+    #   - 7878:7878
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+
+  # Bazarr is used to download and categorize subtitles
+  # https://www.bazarr.media/
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/media:/data
+      - /var/lib/mediaserver/install/config/bazarr:/config
+    ports:
+      - 10.0.0.5:6767:6767
+    restart: unless-stopped
+
+
+  # Prowlarr is our torrent indexer/searcher. Sonarr/Radarr use Prowlarr as a source
+  # https://prowlarr.com/
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/mediaserver/install/config/prowlarr:/config
+    # ports:
+    #   - 9696:9696
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+
+  # # Gluetun is our VPN, so you can download torrents safely
+  gluetun:
+    image: qmcgaw/gluetun:v3
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 10.0.0.5:8888:8888/tcp # HTTP proxy
+      - 10.0.0.5:8388:8388/tcp # Shadowsocks
+      - 10.0.0.5:8388:8388/udp # Shadowsocks
+      - 10.0.0.5:9696:9696/tcp # Prowlarr
+      - 10.0.0.5:8989:8989/tcp # sonarr
+      - 10.0.0.5:7878:7878/tcp # radarr
+      - 10.0.0.5:8081:8081/tcp # qBitTorrent
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=uFjjtKbDORjhezv9XxlbqRrMlRhTcrxRTJvgz0LC9l0=
+      - WIREGUARD_ADDRESSES=10.70.234.193/32
+    restart: unless-stopped
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - TZ=Asia/Tashkent
+      - PORT=5055
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 10.0.0.5:5055:5055
+    volumes:
+      - /var/lib/mediaserver/install/config/jellyseerr:/app/config
