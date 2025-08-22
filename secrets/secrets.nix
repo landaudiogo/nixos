@@ -17,4 +17,5 @@ in
     "flatnotes.age".publicKeys = [ djokovic landaudiogo ];
     "paperless-env.age".publicKeys = [ djokovic landaudiogo ];
     "landau-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
+    "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
 }

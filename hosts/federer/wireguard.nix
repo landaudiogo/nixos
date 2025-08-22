@@ -53,6 +53,11 @@ in
                     publicKey = publicKeys.diogoIphone;
                     allowedIPs = [ "10.0.0.6/32" ];
                 }
+                { 
+                    # ADTV
+                    publicKey = publicKeys.ADTV;
+                    allowedIPs = [ "10.0.0.7/32" ];
+                }
             ];
         };
     };
