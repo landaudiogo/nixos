@@ -16,7 +16,10 @@ in
     "lego-pdns.age".publicKeys = [ federer landaudiogo ];
     "flatnotes.age".publicKeys = [ djokovic landaudiogo ];
     "paperless-env.age".publicKeys = [ djokovic landaudiogo ];
-    "landau-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
+    "diogo-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
+    "diogo-Ipad-wireguard.age".publicKeys = [ landaudiogo ];
+    "ana-Ipad-wireguard.age".publicKeys = [ landaudiogo ];
+    "ana-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
     "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
 }

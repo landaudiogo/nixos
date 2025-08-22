@@ -40,7 +40,7 @@ in
                 }
                 {
                     # Dominguitos Ipad
-                    publicKey = "xfhYdRgHFmNLxpsSBuB2vxeX/33L64mN6q7p58f2Rh4=";
+                    publicKey = publicKeys.anaIpad;
                     allowedIPs = [ "10.0.0.4/32" ];
                 }
                 { 
@@ -57,6 +57,16 @@ in
                     # ADTV
                     publicKey = publicKeys.ADTV;
                     allowedIPs = [ "10.0.0.7/32" ];
+                }
+                { 
+                    # landau Ipad
+                    publicKey = publicKeys.diogoIpad;
+                    allowedIPs = [ "10.0.0.8/32" ];
+                }
+                { 
+                    # landau Ipad
+                    publicKey = publicKeys.anaIphone;
+                    allowedIPs = [ "10.0.0.9/32" ];
                 }
             ];
         };
