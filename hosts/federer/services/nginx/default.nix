@@ -35,10 +35,17 @@ in
             "acme-finished-flatnotes.ad.dlandau.nl.target" 
             "acme-finished-paperless.ad.dlandau.nl.target" 
             "acme-finished-timer.ad.dlandau.nl.target" 
+            "acme-finished-ha.ad.dlandau.nl.target" 
+            "acme-finished-jellyfin.ad.dlandau.nl.target" 
+            "acme-finished-jellyseerr.ad.dlandau.nl.target" 
         ];
         systemd.services.docker-nginx.requires = [ 
             "acme-finished-flatnotes.ad.dlandau.nl.target" 
+            "acme-finished-paperless.ad.dlandau.nl.target" 
             "acme-finished-timer.ad.dlandau.nl.target" 
+            "acme-finished-ha.ad.dlandau.nl.target" 
+            "acme-finished-jellyfin.ad.dlandau.nl.target" 
+            "acme-finished-jellyseerr.ad.dlandau.nl.target" 
         ];
 
         age.secrets.lego-pdns.file = ../../../../secrets/lego-pdns.age;
@@ -68,6 +75,20 @@ in
             };
             "ha.ad.dlandau.nl" = {
                 domain = "ha.ad.dlandau.nl";
+                dnsProvider = "pdns";
+                environmentFile = config.age.secrets.lego-pdns.path;
+                # We don't need to wait for propagation since this is a local DNS server
+                dnsPropagationCheck = false;
+            };
+            "jellyfin.ad.dlandau.nl" = {
+                domain = "jellyfin.ad.dlandau.nl";
+                dnsProvider = "pdns";
+                environmentFile = config.age.secrets.lego-pdns.path;
+                # We don't need to wait for propagation since this is a local DNS server
+                dnsPropagationCheck = false;
+            };
+            "jellyseerr.ad.dlandau.nl" = {
+                domain = "jellyseerr.ad.dlandau.nl";
                 dnsProvider = "pdns";
                 environmentFile = config.age.secrets.lego-pdns.path;
                 # We don't need to wait for propagation since this is a local DNS server
