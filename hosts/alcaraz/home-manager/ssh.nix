@@ -50,6 +50,27 @@
                 identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
                 identitiesOnly = true;
             };
+            kafka1 = {
+                user = "ubuntu";
+                hostname = "3.75.146.71";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
+                identitiesOnly = true;
+            };
+            kafka2 = {
+                user = "ubuntu";
+                hostname = "63.179.176.200";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
+                identitiesOnly = true;
+            };
+            kafka3 = {
+                user = "ubuntu";
+                hostname = "63.179.188.230";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
+                identitiesOnly = true;
+            };
         };
     };
 }

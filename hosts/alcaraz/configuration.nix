@@ -94,6 +94,11 @@
     path = "/home/landaudiogo/.ssh/id_ed25519";
     owner = "landaudiogo";
   };
+  age.secrets.gijs-rsa = {
+    file = ../../secrets/gijs-rsa.age;
+    path = "/home/landaudiogo/.ssh/gijs.pem";
+    owner = "landaudiogo";
+  };
   
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
