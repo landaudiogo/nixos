@@ -10,9 +10,12 @@
             url = "github:ryantm/agenix";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        cec-infrastructure = {
+            url = "github:EC-labs/cec-infrastructure/4fc888e";
+        };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix }@inputs:
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, cec-infrastructure, ... }@inputs:
         let
             system = "x86_64-linux";
             overlay-unstable = final: prev: {
@@ -46,7 +49,7 @@
                 };
 
                 federer = nixpkgs.lib.nixosSystem {
-                    # specialArgs = { inherit inputs; };
+                    specialArgs = { inherit inputs; };
                     modules = [
                         ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
                         home-manager.nixosModules.default

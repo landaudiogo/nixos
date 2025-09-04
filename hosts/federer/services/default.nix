@@ -1,4 +1,4 @@
 { ... }:
 {
-    imports = [ ./pdns ./nginx ];
+    imports = [ ./pdns ./nginx ./cec-creds ];
 }

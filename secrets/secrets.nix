@@ -23,4 +23,5 @@ in
     "ana-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
     "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
+    "cec-creds-env.age".publicKeys = [ federer landaudiogo ];
 }

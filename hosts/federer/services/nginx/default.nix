@@ -1,8 +1,20 @@
-{ lib, config, pkgs, ...}:
+{ lib, config, pkgs, inputs, ...}:
 let
     cfg = config.services.nginx;
     timeLogger = pkgs.fetchzip {
-        url = "https://github.com/user-attachments/files/21853327/static.zip"; sha256 = "sha256-arbg3s/ey3cBi5kigKXWyXkqRA9dWhqykLw2tz8zlts="; 
+        url = "https://github.com/user-attachments/files/21853327/static.zip"; 
+        sha256 = "sha256-arbg3s/ey3cBi5kigKXWyXkqRA9dWhqykLw2tz8zlts="; 
+    };
+    cecCredsFrontend = pkgs.stdenv.mkDerivation {
+        name = "cec-frontend";
+        src = inputs.cec-infrastructure.packages.${pkgs.system}.frontend;
+        nativeBuildInputs = [ pkgs.unzip ];
+        unpackPhase = ''
+            unzip $src
+        '';
+        installPhase = ''
+            mv ./dist $out
+        '';
     };
 in
 {
@@ -27,6 +39,7 @@ in
                         "${cfg.nginxConfig}:/etc/nginx/conf.d:ro" 
                         "/var/lib/acme:/etc/certificates:ro"
                         "${timeLogger}:/usr/share/time-logger"
+                        "${cecCredsFrontend}:/usr/share/cec-creds"
                     ];
                 };
             };
@@ -38,6 +51,7 @@ in
             "acme-finished-ha.ad.dlandau.nl.target" 
             "acme-finished-jellyfin.ad.dlandau.nl.target" 
             "acme-finished-jellyseerr.ad.dlandau.nl.target" 
+            "acme-finished-cec-creds.ad.dlandau.nl.target" 
         ];
         systemd.services.docker-nginx.requires = [ 
             "acme-finished-flatnotes.ad.dlandau.nl.target" 
@@ -46,6 +60,7 @@ in
             "acme-finished-ha.ad.dlandau.nl.target" 
             "acme-finished-jellyfin.ad.dlandau.nl.target" 
             "acme-finished-jellyseerr.ad.dlandau.nl.target" 
+            "acme-finished-cec-creds.ad.dlandau.nl.target" 
         ];
 
         age.secrets.lego-pdns.file = ../../../../secrets/lego-pdns.age;
@@ -89,6 +104,13 @@ in
             };
             "jellyseerr.ad.dlandau.nl" = {
                 domain = "jellyseerr.ad.dlandau.nl";
+                dnsProvider = "pdns";
+                environmentFile = config.age.secrets.lego-pdns.path;
+                # We don't need to wait for propagation since this is a local DNS server
+                dnsPropagationCheck = false;
+            };
+            "cec-creds.ad.dlandau.nl" = {
+                domain = "cec-creds.ad.dlandau.nl";
                 dnsProvider = "pdns";
                 environmentFile = config.age.secrets.lego-pdns.path;
                 # We don't need to wait for propagation since this is a local DNS server

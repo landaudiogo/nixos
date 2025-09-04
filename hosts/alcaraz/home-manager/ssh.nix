@@ -26,7 +26,7 @@
             };
             gijs1 = {
                 user = "ubuntu";
-                hostname = "18.197.157.103";
+                hostname = "3.76.124.233";
                 port = 22;
                 identityFile = "~/.ssh/gijs.pem";
             };
