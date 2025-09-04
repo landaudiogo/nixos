@@ -11,7 +11,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         cec-infrastructure = {
-            url = "github:EC-labs/cec-infrastructure/4fc888e";
+            url = "github:EC-labs/cec-infrastructure/9c16573";
         };
     };
 

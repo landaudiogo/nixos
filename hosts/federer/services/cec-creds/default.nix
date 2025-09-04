@@ -10,6 +10,7 @@
                     "/var/lib/cec-creds/creds:/creds"
                     "/var/lib/cec-creds/data:/data"
                 ];
+                dependsOn = [ "nginx" ];
                 extraOptions = [
                     "--network=container:nginx"
                 ];
