@@ -71,6 +71,20 @@
                 identityFile = nixosConfig.age.secrets.gijs-rsa.path;
                 identitiesOnly = true;
             };
+            client1 = {
+                user = "ubuntu";
+                hostname = "52.214.46.228";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
+                identitiesOnly = true;
+            };
+            client2 = {
+                user = "ubuntu";
+                hostname = "34.253.52.146";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
+                identitiesOnly = true;
+            };
         };
     };
 }
