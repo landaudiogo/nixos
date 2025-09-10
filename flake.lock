@@ -131,16 +131,16 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1757002640,
-        "narHash": "sha256-3NEe3lYsG7nDMACevLT09iGgvv4nd3jV67nuTjT5Nsw=",
+        "lastModified": 1757487296,
+        "narHash": "sha256-I7+ZsUMlNumST72Gl3V1D+JKi5uczKrtguEpOo2kh9M=",
         "owner": "EC-labs",
         "repo": "cec-infrastructure",
-        "rev": "9c16573168b076d901fa0820080826651b910312",
+        "rev": "a2cf43b9a4d2bde5ead1953ad2f6339826cd65a9",
         "type": "github"
       },
       "original": {
         "owner": "EC-labs",
-        "ref": "9c16573",
+        "ref": "a2cf43b",
         "repo": "cec-infrastructure",
         "type": "github"
       }
