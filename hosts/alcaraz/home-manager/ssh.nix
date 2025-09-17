@@ -85,6 +85,26 @@
                 identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
                 identitiesOnly = true;
             };
+            client34 = {
+                user = "ubuntu";
+                hostname = "34.241.90.236";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
+                identitiesOnly = true;
+            };
+            group1 = {
+                user = "ubuntu";
+                hostname = "52.19.112.44";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
+                identitiesOnly = true;
+            };
+            anon-git = {
+                user = "git";
+                hostname = "github.com";
+                identityFile = "~/.ssh/yyuhj46l4y0s7mn";
+                identitiesOnly = true;
+            };
         };
     };
 }
