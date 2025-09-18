@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, ... }:
 let 
     cfg = config.programs.lvim;
 in
@@ -7,7 +7,7 @@ in
     programs.lvim.enable = lib.mkEnableOption "Enable lvim";
   };
   config = lib.mkIf cfg.enable {
-      home.packages = [ pkgs.lunarvim ];
+      home.packages = [ inputs.nixpkgs-2411.legacyPackages.${pkgs.system}.lunarvim ];
       home.file."${config.xdg.configHome}/lvim/config.lua" = {
         text = ''
           --[[

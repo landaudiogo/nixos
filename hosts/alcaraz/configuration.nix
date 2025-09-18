@@ -16,6 +16,10 @@
 
   networking.hostName = "alcaraz"; # Define your hostname.
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "none";
+  networking.useDHCP = false;
+  networking.dhcpcd.enable = false;
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   services.printing.enable = true;
   services.logind.lidSwitch = "ignore";
@@ -100,6 +104,7 @@
     owner = "landaudiogo";
   };
   
+  home-manager.extraSpecialArgs = { inherit inputs; };
   home-manager.useGlobalPkgs = true;
   home-manager.users.landaudiogo = 
     { pkgs, ... }:

@@ -1,5 +1,6 @@
 {
     inputs = {
+        nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
         nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
         home-manager = {
@@ -27,7 +28,7 @@
         in rec {
             nixosConfigurations = {
                 djokovic = nixpkgs.lib.nixosSystem {
-                    # specialArgs = { inherit inputs; };
+                    specialArgs = { inherit inputs; };
                     modules = [
                         ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
                         home-manager.nixosModules.default
