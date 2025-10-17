@@ -32,13 +32,13 @@
             };
             gijs2 = {
                 user = "ubuntu";
-                hostname = "3.65.2.55";
+                hostname = "3.75.214.198";
                 port = 22;
                 identityFile = "~/.ssh/gijs.pem";
             };
             gijs3 = {
                 user = "ubuntu";
-                hostname = "18.193.68.182";
+                hostname = "3.71.49.28";
                 port = 22;
                 identityFile = nixosConfig.age.secrets.landaudiogo-ed25519.path;
                 identitiesOnly = true;
@@ -103,6 +103,27 @@
                 user = "git";
                 hostname = "github.com";
                 identityFile = "~/.ssh/yyuhj46l4y0s7mn";
+                identitiesOnly = true;
+            };
+            ip-172-31-31-167 = {
+                user = "ubuntu";
+                hostname = "3.75.176.4";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
+                identitiesOnly = true;
+            };
+            ip-172-31-25-17 = {
+                user = "ubuntu";
+                hostname = "18.192.119.60";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
+                identitiesOnly = true;
+            };
+            ip-172-31-27-25 = {
+                user = "ubuntu";
+                hostname = "18.197.102.90";
+                port = 22;
+                identityFile = nixosConfig.age.secrets.gijs-rsa.path;
                 identitiesOnly = true;
             };
         };
