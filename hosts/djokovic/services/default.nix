@@ -5,5 +5,6 @@
         ./paperless 
         ./home-assistant 
         ./mediaserver 
+        ./webcam
     ];
 }
