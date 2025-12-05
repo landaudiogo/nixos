@@ -111,6 +111,7 @@
     extraOptions = [
       "--network-alias=jellyfin"
       "--network=mediaserver_default"
+      "--cpus=2"
     ];
   };
   systemd.services."docker-jellyfin" = {

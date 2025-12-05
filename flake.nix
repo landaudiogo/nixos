@@ -14,6 +14,9 @@
         cec-infrastructure = {
             url = "github:EC-labs/cec-infrastructure/a2cf43b";
         };
+        toolshed = {
+            url = "github:landaudiogo/toolshed";
+        };
     };
 
     outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, cec-infrastructure, ... }@inputs:

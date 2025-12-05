@@ -62,6 +62,7 @@ in
 
           -- Automatically install missing parsers when entering buffer
           lvim.builtin.treesitter.auto_install = true
+          lvim.builtin.treesitter.indent = false
 
           -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
@@ -128,7 +129,10 @@ in
           --     },
           -- }
 
-          vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+          vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer", "pyright" })
+          lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+            return server ~= "ruff"
+          end, lvim.lsp.automatic_configuration.skipped_servers)
 
           lvim.plugins = {
               {
