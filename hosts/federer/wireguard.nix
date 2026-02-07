@@ -64,9 +64,14 @@ in
                     allowedIPs = [ "10.0.0.8/32" ];
                 }
                 { 
-                    # landau Ipad
-                    publicKey = publicKeys.anaIphone;
+                    # Nadal
+                    publicKey = publicKeys.nadal;
                     allowedIPs = [ "10.0.0.9/32" ];
+                }
+                { 
+                    # Ana Iphone
+                    publicKey = publicKeys.anaIphone;
+                    allowedIPs = [ "10.0.0.10/32" ];
                 }
             ];
         };
