@@ -21,7 +21,6 @@
   networking.dhcpcd.enable = false;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
-  services.printing.enable = true;
   services.logind.lidSwitch = "ignore";
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
@@ -59,6 +58,20 @@
     '';
   };
 
+    # printing
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    services.printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
+    };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.landaudiogo = {
