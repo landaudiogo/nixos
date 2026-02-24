@@ -52,6 +52,10 @@ in
                 recordName = "qbit.ad.dlandau.nl";
                 proxyConnection = "10.0.0.5:8081";
             };
+            tasks = {
+                recordName = "tasks.ad.dlandau.nl";
+                proxyConnection = "10.0.0.5:3456";
+            };
             timer = {
                 recordName = "timer.ad.dlandau.nl";
                 staticContent = timeLogger;

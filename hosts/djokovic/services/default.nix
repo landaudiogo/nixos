@@ -5,5 +5,6 @@
         ./home-assistant 
         ./mediaserver 
         ./webcam
+        ./vikunja
     ];
 }
