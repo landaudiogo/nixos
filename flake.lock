@@ -1123,11 +1123,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1770558749,
-        "narHash": "sha256-Jr12TpgAm4DZ05DZZcejYWD0MHHoOAJFLS1FTjVB/Iw=",
+        "lastModified": 1771944074,
+        "narHash": "sha256-Y0LBvHN/vveqxLqm2UoFR1Mqs9en3/Y7Q4AnyoRzYWM=",
         "owner": "landaudiogo",
         "repo": "toolshed",
-        "rev": "81484fe05d35fc7e6dcd98c330c9b682707befa8",
+        "rev": "eb03c7e3bf1dd5915bba7f8a29f5039b91d6b0dd",
         "type": "github"
       },
       "original": {
