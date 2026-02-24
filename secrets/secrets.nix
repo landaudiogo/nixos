@@ -26,5 +26,6 @@ in
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
     "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
     "cec-creds-env.age".publicKeys = [ federer landaudiogo ];
-
+    "pdnsctl.age".publicKeys = [ alcaraz ];
+    "pdnsctl-ad.dlandau.nl..age".publicKeys = [ federer landaudiogo ];
 }

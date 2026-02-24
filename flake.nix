@@ -19,7 +19,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, cec-infrastructure, ... }@inputs:
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, cec-infrastructure, toolshed, ... }@inputs:
         let
             system = "x86_64-linux";
             overlay-unstable = final: prev: {
@@ -27,6 +27,7 @@
                     inherit system;
                     config.allowUnfree = true;
                 };
+                pdnsctl = toolshed.packages.${system}.pdnsctl;
             };
         in rec {
             nixosConfigurations = {
