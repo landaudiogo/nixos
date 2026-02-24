@@ -44,24 +44,6 @@ in
                 };
             };
         };
-        systemd.services.docker-nginx.after = [ 
-            "acme-finished-flatnotes.ad.dlandau.nl.target" 
-            "acme-finished-paperless.ad.dlandau.nl.target" 
-            "acme-finished-timer.ad.dlandau.nl.target" 
-            "acme-finished-ha.ad.dlandau.nl.target" 
-            "acme-finished-jellyfin.ad.dlandau.nl.target" 
-            "acme-finished-jellyseerr.ad.dlandau.nl.target" 
-            "acme-finished-cec-creds.ad.dlandau.nl.target" 
-        ];
-        systemd.services.docker-nginx.requires = [ 
-            "acme-finished-flatnotes.ad.dlandau.nl.target" 
-            "acme-finished-paperless.ad.dlandau.nl.target" 
-            "acme-finished-timer.ad.dlandau.nl.target" 
-            "acme-finished-ha.ad.dlandau.nl.target" 
-            "acme-finished-jellyfin.ad.dlandau.nl.target" 
-            "acme-finished-jellyseerr.ad.dlandau.nl.target" 
-            "acme-finished-cec-creds.ad.dlandau.nl.target" 
-        ];
 
         age.secrets.lego-pdns.file = ../../../../secrets/lego-pdns.age;
         security.acme.acceptTerms = true;
