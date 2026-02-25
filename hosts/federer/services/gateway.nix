@@ -243,15 +243,28 @@ in
             //  { 
                     # docker-nginx should run after the acme services
                     "docker-nginx".serviceConfig.After = builtins.map (svc: "acme-finished-${svc.recordName}.target") gatewayServices; 
+                    # We create an nginx reloader service to be triggered on renewal success
+                    "nginx-reloader" = {
+                        script = ''
+                            ${pkgs.docker}/bin/docker exec nginx nginx -s reload
+                        '';
+                        serviceConfig.Type = "oneshot";
+                    };
                 }
             //  builtins.foldl' (acc: svc: 
                     acc // {
-                        "acme-${svc.recordName}".serviceConfig = {
-                            # ACME services should run after pdnsctl
-                            After = builtins.map (zone: "pdnsctl-${zone}.service") cfg.zones;
+                        "acme-${svc.recordName}" = {
+                            unitConfig = {
+                                OnSuccess = "nginx-reloader.service";
+                            };
+                            serviceConfig = {
+                                # ACME services should run after pdnsctl
+                                After = builtins.map (zone: "pdnsctl-${zone}.service") cfg.zones;
+                            };
                         };
                     }
-                ) {} gatewayServices;
+                ) {} gatewayServices
+        ;
 
         security.acme = {
             acceptTerms = true;
