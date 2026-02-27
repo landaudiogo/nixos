@@ -56,6 +56,12 @@
           User root
           HostName 10.0.0.5
           IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host root-sinner
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 10.0.0.2
+          IdentityFile ${config.age.secrets.root-ed25519.path}
     '';
   };
 

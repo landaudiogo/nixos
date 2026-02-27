@@ -63,6 +63,17 @@
                         ./hosts/federer/configuration.nix
                     ];
                 };
+
+                sinner = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = [
+                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        home-manager.nixosModules.default
+                        agenix.nixosModules.default
+                        ./modules/nixos
+                        ./hosts/sinner/configuration.nix
+                    ];
+                };
             };
         };
 }
