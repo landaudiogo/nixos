@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ./wireguard.nix
-    # ./k8s.nix
+    ./k8s.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -15,7 +15,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "sinner"; # Define your hostname.
+  networking.hostName = "sinner";
+  networking.search = [ "ad.dlandau.nl" ];
   networking.networkmanager.enable = true;
 
   systemd.targets.sleep.enable = false;

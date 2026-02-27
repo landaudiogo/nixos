@@ -16,6 +16,7 @@
   virtualisation.docker.enable = true;
 
   networking.hostName = "alcaraz"; # Define your hostname.
+  networking.search = [ "ad.dlandau.nl" ]; # Define your hostname.
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "none";
   networking.useDHCP = false;
