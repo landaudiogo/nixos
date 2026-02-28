@@ -5,6 +5,7 @@
     ../../modules/nixos
     ./wireguard.nix
     ./services
+    ./k8s.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
