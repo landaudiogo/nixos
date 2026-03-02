@@ -2,7 +2,7 @@
 {
     services.kubernetes = {
         roles = [ "node" ];
-        masterAddress = "alcaraz.ad.dlandau.nl";
+        masterAddress = "federer.ad.dlandau.nl";
         clusterCidr = "10.42.0.0/16";
         apiserver.serviceClusterIpRange = "10.43.0.0/16";
 
@@ -15,7 +15,7 @@
         };
 
         kubelet.extraOpts = "--fail-swap-on=false";
-        kubelet.kubeconfig.server = "https://alcaraz.ad.dlandau.nl:6443";
+        kubelet.kubeconfig.server = "https://federer.ad.dlandau.nl:6443";
     };
 
     age.secrets.root-ca = {
