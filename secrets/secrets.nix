@@ -33,4 +33,9 @@ in
     "cec-creds-env.age".publicKeys = [ federer landaudiogo ];
     "pdnsctl.age".publicKeys = [ alcaraz ];
     "pdnsctl-ad.dlandau.nl..age".publicKeys = [ federer landaudiogo ];
+
+    # k8s
+    "root-ca.age".publicKeys = [ root alcaraz federer landaudiogo sinner djokovic ];
+    "root-ca-key.age".publicKeys = [ root alcaraz federer ];
+    "k8s-apitoken.age".publicKeys = [ root alcaraz federer landaudiogo sinner djokovic ];
 }
