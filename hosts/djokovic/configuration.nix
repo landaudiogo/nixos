@@ -9,6 +9,7 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ (import ./overlays.nix) ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

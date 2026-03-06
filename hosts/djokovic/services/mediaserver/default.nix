@@ -2,6 +2,8 @@
 { pkgs, lib, config, ... }:
 
 {
+  imports = [ ./jellyfin.nix ];
+
   age.secrets.gluetun-env.file = ../../../../secrets/gluetun-env.age;
 
   # Runtime
@@ -73,48 +75,6 @@
     ];
   };
   systemd.services."docker-gluetun" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-      RestartMaxDelaySec = lib.mkOverride 90 "1m";
-      RestartSec = lib.mkOverride 90 "100ms";
-      RestartSteps = lib.mkOverride 90 9;
-    };
-    after = [
-      "docker-network-mediaserver_default.service"
-    ];
-    requires = [
-      "docker-network-mediaserver_default.service"
-    ];
-    partOf = [
-      "docker-compose-mediaserver-root.target"
-    ];
-    wantedBy = [
-      "docker-compose-mediaserver-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."jellyfin" = {
-    image = "lscr.io/linuxserver/jellyfin";
-    environment = {
-      "PGID" = "1000";
-      "PUID" = "1000";
-      "VERSION" = "docker";
-    };
-    volumes = [
-      "/etc/localtime:/etc/localtime:ro"
-      "/var/lib/mediaserver/install/config/jellyfin:/config:rw"
-      "/var/lib/mediaserver/media:/data:rw"
-    ];
-    ports = [
-      "10.0.0.5:8096:8096/tcp"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=jellyfin"
-      "--network=mediaserver_default"
-      "--cpus=2"
-    ];
-  };
-  systemd.services."docker-jellyfin" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
       RestartMaxDelaySec = lib.mkOverride 90 "1m";
