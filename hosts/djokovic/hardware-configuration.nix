@@ -38,4 +38,19 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  #nvidia configuration
+    services.xserver.videoDrivers = ["nvidia"];
+    hardware.graphics.enable = true;
+    hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = false;
+        powerManagement.finegrained = false;
+        package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+        open = false; 
+        nvidiaSettings = true;
+    };
+    hardware.nvidia-container-toolkit.enable = true;
+    nixpkgs.config.nvidia.acceptLicense = true;
+    virtualisation.docker.daemon.settings.features.cdi = true;
 }
