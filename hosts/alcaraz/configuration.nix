@@ -4,7 +4,6 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ./wireguard.nix
-    ./k8s.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -61,6 +60,12 @@
           IdentitiesOnly yes
           User root
           HostName 10.0.0.2
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host root-nadal
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 192.168.2.53
           IdentityFile ${config.age.secrets.root-ed25519.path}
     '';
   };
