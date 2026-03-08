@@ -16,8 +16,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "djokovic"; # Define your hostname.
   networking.networkmanager.enable = true;
+  networking.hostName = "djokovic"; # Define your hostname.
+  age.secrets."pdnsctl-ad.dlandau.nl.".file = ../../secrets/pdnsctl-ad.dlandau.nl..age;
+  services.pdnsctl.zones."ad.dlandau.nl." = {
+    envFile = config.age.secrets."pdnsctl-ad.dlandau.nl.".path;
+    records = [{
+      recordName = "djokovic.ad.dlandau.nl.";
+      IPv4Address = "10.0.0.5";
+    }];
+  }; # Define your hostname.
 
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;

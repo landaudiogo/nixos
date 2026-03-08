@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, ... }:
 let
     gatewayServiceOption = lib.types.submodule {
         options = {
@@ -130,51 +130,29 @@ let
         # + staticConfig
     );
 
-    ##################
-    # pdnsctl config #
-    ##################
+    ###########
+    # pdnsctl #
+    ###########
     zones = cfg.zones;
     servicesByZone = builtins.foldl' 
         (acc: zone: 
             acc // {
-                ${zone + "."} = (
-                    builtins.filter 
-                    (svc: (builtins.match ''^.*${zone}$'' svc.recordName) != null) 
-                    gatewayServices
-                );
+                ${zone + "."} = {
+                    envFile = config.age.secrets."pdnsctl-${zone}.".path;
+                    records = lib.pipe gatewayServices [
+                        (builtins.filter 
+                            (svc: (builtins.match ''^.*${zone}$'' svc.recordName) != null))
+                        (builtins.map (svc: 
+                            { recordName = svc.recordName + "."; 
+                              IPv4Address = if svc.VPNOnly then cfg.internalIP else cfg.externalIP; }))
+                    ];
+                };
             }
         ) {} zones;
-    pdnsctlZoneService = (zone: services:
-        {
-            script = builtins.concatStringsSep "\n" (
-                builtins.map (svc: ''${pkgs.pdnsctl}/bin/create-rrset ${svc.recordName + "."} ${if svc.VPNOnly then cfg.internalIP else cfg.externalIP}'') services
-            );
-
-            environment = {
-                ZONE = "${zone}";
-            };
-            serviceConfig = {
-                EnvironmentFile = config.age.secrets."pdnsctl-${zone}".path;
-                PassEnvironment = [ 
-                    "PDNS_API_KEY" 
-                    "ZONE" 
-                    "PDNS_SERVER" 
-                ];
-                Type = "oneshot";
-                User = "root";
-                RemainAfterExit = true;
-            };
-
-            wantedBy = ["multi-user.target"];
-        }
-    );
-    pdnsctlServices = builtins.foldl' (acc: zone:
-        let
-            services = servicesByZone.${zone};
-        in
+    pdnsctlAgeFiles = builtins.foldl' (acc: zone:
         acc // {
-            "pdnsctl-${zone}" = pdnsctlZoneService zone services;
-        }
+            "pdnsctl-${zone}".file = ../../../secrets/pdnsctl-${zone}.age;
+        } 
     ) {} (builtins.attrNames servicesByZone);
 
     ########
@@ -188,15 +166,6 @@ let
             };
         }
     ) {} gatewayServices;
-
-    ###############
-    # pdnsctl age #
-    ###############
-    pdnsctlAgeFiles = builtins.foldl' (acc: zone:
-        acc // {
-            "pdnsctl-${zone}".file = ../../../secrets/pdnsctl-${zone}.age;
-        } 
-    ) {} (builtins.attrNames servicesByZone);
 
     ###################
     # static services #
@@ -240,9 +209,9 @@ in
             lego-pdns.file = ../../../secrets/lego-pdns.age;
         } // pdnsctlAgeFiles;
 
-        systemd.services = pdnsctlServices 
-            # docker-nginx should restart if the acme services complete successfully
-            //  { 
+        services.pdnsctl.zones = servicesByZone;
+
+        systemd.services = { 
                     # docker-nginx should run after the acme services
                     "docker-nginx".serviceConfig.After = builtins.map (svc: "acme-finished-${svc.recordName}.target") gatewayServices; 
                     # We create an nginx reloader service to be triggered on renewal success

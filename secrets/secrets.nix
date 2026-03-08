@@ -32,7 +32,7 @@ in
     "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
     "cec-creds-env.age".publicKeys = [ federer landaudiogo ];
     "pdnsctl.age".publicKeys = [ alcaraz ];
-    "pdnsctl-ad.dlandau.nl..age".publicKeys = [ federer landaudiogo ];
+    "pdnsctl-ad.dlandau.nl..age".publicKeys = [ federer djokovic landaudiogo ];
 
     # k8s
     "root-ca.age".publicKeys = [ root alcaraz federer landaudiogo sinner djokovic ];

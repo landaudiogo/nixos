@@ -20,6 +20,10 @@
   boot.loader.grub.useOSProber = true;
 
   networking.hostName = "federer"; # Define your hostname.
+  services.pdnsctl.zones."ad.dlandau.nl.".records = [{
+    recordName = "federer.ad.dlandau.nl.";
+    IPv4Address = "10.0.0.1";
+  }];
   networking.networkmanager.enable = true;
 
   services.xserver.enable = true;
