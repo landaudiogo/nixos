@@ -107,6 +107,8 @@ let
     '');
     nginxConfig = pkgs.writeText "nginx-config" (
         ''
+        client_max_body_size 100M;
+
         map $http_upgrade $connection_upgrade {
             default upgrade;
             '''      close;
