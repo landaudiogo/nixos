@@ -19,6 +19,9 @@ in
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
     "sinner-wireguard.age".publicKeys = [ sinner landaudiogo ];
 
+    "anaIphoneClientCertificate-key.age".publicKeys = [ landaudiogo ];
+    "anaIphoneClientCertificate-crt.age".publicKeys = [ landaudiogo ];
+ 
     "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer ];
     "gijs-rsa.age".publicKeys = [ alcaraz landaudiogo ];
     "root-ed25519.age".publicKeys = [ alcaraz ];
