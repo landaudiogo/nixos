@@ -60,6 +60,8 @@ in
                 "x-scheme-handler/https" = [ "google-chrome.desktop" ];
                 "x-scheme-handler/about" = [ "google-chrome.desktop" ];
                 "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
+                "image/png" = [ "org.gnome.Loupe.desktop" ];
+                "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
             };
         };
     };
