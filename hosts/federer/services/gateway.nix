@@ -11,14 +11,24 @@ let
                 default = null;
             };
 
-            VPNOnly = lib.mkOption {
-                type = lib.types.bool;
-                default = true;
+            DNSRecordIP = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+            };
+
+            allowRanges = lib.mkOption {
+                type = lib.types.listOf lib.types.str;
+                default = ["10.0.0.0/24"];
             };
 
             staticContent = lib.mkOption {
                 type = lib.types.nullOr lib.types.path;
                 default = null;
+            };
+
+            requireClientCertificate = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
             };
         };
     };
@@ -34,10 +44,9 @@ let
             listen 80;
             server_name ${svc.recordName};
 
-            ${lib.optionalString svc.VPNOnly ''
-            allow 10.0.0.0/24;
+            ${lib.concatStringsSep ''\n'' (builtins.map (range: ''allow ${range};'') svc.allowRanges)}
             deny all;
-            ''}
+
 
             location / {
                 return 301 https://$host$request_uri;
@@ -49,12 +58,14 @@ let
             server_name             ${svc.recordName};
             ssl_certificate         /etc/certificates/${svc.recordName}/cert.pem;
             ssl_certificate_key     /etc/certificates/${svc.recordName}/key.pem;
-
-            ${lib.optionalString svc.VPNOnly 
+            ${lib.optionalString svc.requireClientCertificate
             ''
-            allow 10.0.0.0/24; 
-            deny all;
+            ssl_client_certificate /etc/ca/ca.pem;
+            ssl_verify_client on;
             ''}
+
+            ${lib.concatStringsSep ''\n'' (builtins.map (range: ''allow ${range};'') svc.allowRanges)}
+            deny all;
 
             location / {
                 proxy_pass http://${svc.proxyConnection};
@@ -74,11 +85,8 @@ let
             listen 80;
             server_name ${svc.recordName};
 
-            ${lib.optionalString svc.VPNOnly 
-            ''
-            allow 10.0.0.0/24; 
+            ${lib.concatStringsSep ''\n'' (builtins.map (range: ''allow ${range};'') svc.allowRanges)}
             deny all;
-            ''}
 
             location / {
                 return 301 https://$host$request_uri;
@@ -90,12 +98,15 @@ let
             server_name             ${svc.recordName};
             ssl_certificate         /etc/certificates/${svc.recordName}/cert.pem;
             ssl_certificate_key     /etc/certificates/${svc.recordName}/key.pem;
-
-            ${lib.optionalString svc.VPNOnly 
+            ${lib.optionalString svc.requireClientCertificate
             ''
-            allow 10.0.0.0/24; 
-            deny all;
+            ssl_client_certificate /etc/ca/ca.pem;
+            ssl_verify_client on;
             ''}
+
+
+            ${lib.concatStringsSep ''\n'' (builtins.map (range: ''allow ${range};'') svc.allowRanges)}
+            deny all;
 
             root   /usr/share/${svc.recordName};
 
@@ -127,7 +138,6 @@ let
         + (lib.concatStringsSep "\n\n\n\n\n" (builtins.map nginxProxyServiceConfig (builtins.filter (svc: svc.proxyConnection != null) gatewayServices)))
         + "\n\n\n\n"
         + (lib.concatStringsSep "\n\n\n\n\n" (builtins.map nginxStaticServiceConfig (builtins.filter (svc: svc.staticContent != null) gatewayServices)))
-        # + staticConfig
     );
 
     ###########
@@ -144,7 +154,7 @@ let
                             (svc: (builtins.match ''^.*${zone}$'' svc.recordName) != null))
                         (builtins.map (svc: 
                             { recordName = svc.recordName + "."; 
-                              IPv4Address = if svc.VPNOnly then cfg.internalIP else cfg.externalIP; }))
+                              IPv4Address = if svc.DNSRecordIP != null then svc.DNSRecordIP else cfg.defaultRecordIP; }))
                     ];
                 };
             }
@@ -181,10 +191,7 @@ in
             type = lib.types.listOf lib.types.str;
             default = [];
         };
-        gateway.externalIP = lib.mkOption {
-            type = lib.types.str;
-        };
-        gateway.internalIP = lib.mkOption {
+        gateway.defaultRecordIP = lib.mkOption {
             type = lib.types.str;
         };
     };
@@ -253,10 +260,13 @@ in
                 "80:80"
                 "443:443"
             ];
-            volumes = [ 
-                "${nginxConfig}:/etc/nginx/conf.d/nginx.conf:ro" 
-                "/var/lib/acme:/etc/certificates:ro"
-            ] ++ staticServiceVolumeMapping;
+            volumes =
+                [
+                    "${nginxConfig}:/etc/nginx/conf.d/nginx.conf:ro"
+                    "/var/lib/acme:/etc/certificates:ro"
+                    "${config.age.secrets.root-ca.path}:/etc/ca/ca.pem"
+                ]
+                ++ staticServiceVolumeMapping;
         };
     };
 }

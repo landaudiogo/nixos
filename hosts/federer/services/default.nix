@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
     timeLogger = pkgs.fetchzip {
         url = "https://github.com/user-attachments/files/21853327/static.zip"; 
@@ -13,8 +13,7 @@ in
 
     gateway = {
         zones = [ "ad.dlandau.nl" ];
-        externalIP = "77.171.239.251";
-        internalIP = "10.0.0.1";
+        defaultRecordIP = "10.0.0.1";
         services = { 
             flatnotes = {
                 recordName = "flatnotes.ad.dlandau.nl";
@@ -23,6 +22,13 @@ in
             home-assistant = {
                 recordName = "ha.ad.dlandau.nl";
                 proxyConnection = "10.0.0.5:8123";
+            };
+            ana-homeassistant = {
+                recordName = "anaha.ad.dlandau.nl";
+                proxyConnection = "10.0.0.5:8123";
+                requireClientCertificate = true;
+                allowRanges = ["0.0.0.0/0"];
+                DNSRecordIP = "77.171.239.251";
             };
             jellyfin = {
                 recordName = "jellyfin.ad.dlandau.nl";
@@ -59,7 +65,20 @@ in
             timer = {
                 recordName = "timer.ad.dlandau.nl";
                 staticContent = timeLogger;
-                VPNOnly = false;
+                allowRanges = ["0.0.0.0/0"];
+                DNSRecordIP = "77.171.239.251";
+            };
+            jvfJellyfin = {
+                recordName = "jellyfin-jvf.ad.dlandau.nl";
+                DNSRecordIP = "192.168.2.9";
+                proxyConnection = "10.0.0.5:8096";
+                allowRanges = [ "192.168.2.28/32" ];
+            };
+            jvfJellyseerr = {
+                recordName = "jellyseerr-jvf.ad.dlandau.nl";
+                DNSRecordIP = "192.168.2.9";
+                proxyConnection = "10.0.0.5:5055";
+                allowRanges = [ "192.168.2.28/32" ];
             };
         };
     };
