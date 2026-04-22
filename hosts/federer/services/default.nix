@@ -19,6 +19,17 @@ in
                 recordName = "flatnotes.ad.dlandau.nl";
                 proxyConnection = "10.0.0.5:8080";
             };
+            koffan = {
+                recordName = "koffan.ad.dlandau.nl";
+                proxyConnection = "10.0.0.5:3122";
+            };
+            ana-koffan = {
+                recordName = "ana.koffan.ad.dlandau.nl";
+                proxyConnection = "10.0.0.5:3122";
+                requireClientCertificate = true;
+                allowRanges = ["0.0.0.0/0"];
+                DNSRecordIP = "77.171.239.251";
+            };
             home-assistant = {
                 recordName = "ha.ad.dlandau.nl";
                 proxyConnection = "10.0.0.5:8123";

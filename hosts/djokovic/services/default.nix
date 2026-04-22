@@ -6,5 +6,6 @@
         ./mediaserver 
         ./webcam
         ./vikunja
+        ./koffan
     ];
 }

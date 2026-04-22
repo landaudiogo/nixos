@@ -13,7 +13,6 @@
                 VIKUNJA_DATABASE_TYPE = "sqlite";
                 VIKUNJA_DATABASE_USER = "vikunja";
                 VIKUNJA_DATABASE_DATABASE = "vikunja";
-                # VIKUNJA_SERVICE_JWTSECRET = <fake-secret>
             };
         };
     };
