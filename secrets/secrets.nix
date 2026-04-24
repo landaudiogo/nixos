@@ -31,6 +31,7 @@ in
     "lego-pdns.age".publicKeys = [ federer landaudiogo ];
 
     "flatnotes.age".publicKeys = [ djokovic landaudiogo ];
+    "koffan.age".publicKeys = [ djokovic landaudiogo ];
     "paperless-env.age".publicKeys = [ djokovic landaudiogo ];
     "gluetun-env.age".publicKeys = [ djokovic landaudiogo ];
     "cec-creds-env.age".publicKeys = [ federer landaudiogo ];
