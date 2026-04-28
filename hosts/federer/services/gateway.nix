@@ -220,29 +220,45 @@ in
 
         systemd.services = { 
                     # docker-nginx should run after the acme services
-                    "docker-nginx".serviceConfig.After = builtins.map (svc: "acme-finished-${svc.recordName}.target") gatewayServices; 
+                    "docker-nginx".unitConfig.After = builtins.map (svc: "acme-finished-${svc.recordName}.target") gatewayServices; 
                     # We create an nginx reloader service to be triggered on renewal success
                     "nginx-reloader" = {
                         script = ''
                             ${pkgs.docker}/bin/docker exec nginx nginx -s reload
                         '';
-                        serviceConfig.Type = "oneshot";
+                        serviceConfig = {
+                            Type = "oneshot";
+                        };
+                    };
+
+                    # This is the timer unit's corresponding service — it just starts the timer
+                    "nginx-reloader-debounce" = {
+                        script = ''
+                            ${pkgs.systemd}/bin/systemctl start nginx-reloader.timer
+                        '';
+                        serviceConfig = {
+                            Type = "oneshot";
+                        };
                     };
                 }
             //  builtins.foldl' (acc: svc: 
                     acc // {
                         "acme-${svc.recordName}" = {
                             unitConfig = {
-                                OnSuccess = "nginx-reloader.service";
-                            };
-                            serviceConfig = {
-                                # ACME services should run after pdnsctl
+                                OnSuccess = "nginx-reloader-debounce";
                                 After = builtins.map (zone: "pdnsctl-${zone}.service") cfg.zones;
                             };
                         };
                     }
                 ) {} gatewayServices
         ;
+
+        systemd.timers."nginx-reloader" = {
+            timerConfig = {
+                OnActiveSec = "5s";      # fire 5s after the timer is first started
+                AccuracySec = "1s";
+            };
+        };
 
         security.acme = {
             acceptTerms = true;
