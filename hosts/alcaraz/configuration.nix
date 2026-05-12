@@ -13,6 +13,9 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.daemon.settings = {
+    "insecure-registries" = ["federer.ad.dlandau.nl:30002"];
+  };
 
   networking.hostName = "alcaraz"; # Define your hostname.
   networking.networkmanager.enable = true;

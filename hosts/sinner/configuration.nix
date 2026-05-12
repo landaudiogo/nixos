@@ -44,6 +44,9 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.daemon.settings = {
+    "insecure-registries" = ["federer.ad.dlandau.nl:30002"];
+  };
   virtualisation.oci-containers.backend = "docker";
 
   environment.systemPackages = with pkgs; [
