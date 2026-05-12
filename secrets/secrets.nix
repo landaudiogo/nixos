@@ -22,7 +22,7 @@ in
     "anaIphoneClientCertificate-key.age".publicKeys = [ landaudiogo ];
     "anaIphoneClientCertificate-crt.age".publicKeys = [ landaudiogo ];
  
-    "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer ];
+    "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer sinner ];
     "gijs-rsa.age".publicKeys = [ alcaraz landaudiogo ];
     "root-ed25519.age".publicKeys = [ alcaraz ];
 

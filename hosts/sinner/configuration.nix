@@ -37,6 +37,12 @@
     }];
   };
 
+  age.secrets.landaudiogo-ed25519 = {
+    file = ../../secrets/landaudiogo-ed25519.age;
+    path = "/home/landaudiogo/.ssh/id_ed25519";
+    owner = "landaudiogo";
+  };
+
   virtualisation.docker.enable = true;
   virtualisation.oci-containers.backend = "docker";
 
