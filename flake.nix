@@ -75,5 +75,11 @@
                     ];
                 };
             };
+            templates = {
+                bootstrap = {
+                    path = ./templates/bootstrap;
+                    description = "Minimal nixos bootstrap flake";
+                };
+            };
         };
 }
