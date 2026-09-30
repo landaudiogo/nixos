@@ -257,6 +257,7 @@ in
             timerConfig = {
                 OnActiveSec = "5s";      # fire 5s after the timer is first started
                 AccuracySec = "1s";
+                RemainAfterElapse = false;
             };
         };
 

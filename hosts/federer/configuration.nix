@@ -10,8 +10,19 @@
     ../../modules/nixos
     ./wireguard.nix
     ./services
-    ./k8s-master.nix
   ];
+  age.secrets.root-ca = {
+      file = ../../secrets/root-ca.age;
+      path = "${config.services.kubernetes.pki.caCertPathPrefix}.pem";
+      owner = "root";
+      symlink = false;
+  };
+  age.secrets.root-ca-key = {
+      file = ../../secrets/root-ca-key.age;
+      path = "${config.services.kubernetes.pki.caCertPathPrefix}-key.pem";
+      owner = "root";
+      symlink = false;
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -20,10 +31,28 @@
   boot.loader.grub.useOSProber = true;
 
   networking.hostName = "federer"; # Define your hostname.
-  services.pdnsctl.zones."ad.dlandau.nl.".records = [{
-    recordName = "federer.ad.dlandau.nl.";
-    IPv4Address = "10.0.0.1";
-  }];
+  services.pdnsctl.zones."ad.dlandau.nl.".records = [
+      {
+        recordName = "federer.ad.dlandau.nl.";
+        IPv4Address = "10.0.0.1";
+      }
+      {
+        recordName = "k8s-master.ad.dlandau.nl.";
+        IPv4Address = "192.168.2.22";
+      }
+      {
+        recordName = "k8s-worker1.ad.dlandau.nl.";
+        IPv4Address = "192.168.2.23";
+      }
+      {
+        recordName = "k8s-worker2.ad.dlandau.nl.";
+        IPv4Address = "192.168.2.36";
+      }
+      {
+        recordName = "k8s-worker3.ad.dlandau.nl.";
+        IPv4Address = "192.168.2.35";
+      }
+  ];
   networking.networkmanager.enable = true;
 
   services.xserver.enable = true;

@@ -73,6 +73,11 @@ in
                     publicKey = publicKeys.anaIphone;
                     allowedIPs = [ "10.0.0.10/32" ];
                 }
+                { 
+                    # workstation
+                    publicKey = publicKeys.workstation;
+                    allowedIPs = [ "10.0.0.11/32" ];
+                }
             ];
         };
     };

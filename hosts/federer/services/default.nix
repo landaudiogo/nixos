@@ -28,7 +28,7 @@ in
                 proxyConnection = "10.0.0.5:3122";
                 requireClientCertificate = true;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "77.171.239.251";
+                DNSRecordIP = "83.87.96.61";
             };
             home-assistant = {
                 recordName = "ha.ad.dlandau.nl";
@@ -39,7 +39,7 @@ in
                 proxyConnection = "10.0.0.5:8123";
                 requireClientCertificate = true;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "77.171.239.251";
+                DNSRecordIP = "83.87.96.61";
             };
             jellyfin = {
                 recordName = "jellyfin.ad.dlandau.nl";
@@ -77,7 +77,7 @@ in
                 recordName = "timer.ad.dlandau.nl";
                 staticContent = timeLogger;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "77.171.239.251";
+                DNSRecordIP = "83.87.96.61";
             };
             jvfJellyfin = {
                 recordName = "jellyfin-jvf.ad.dlandau.nl";
