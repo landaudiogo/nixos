@@ -5,7 +5,6 @@
     ../../modules/nixos
     ./wireguard.nix
     ./services
-    ./k8s-worker.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

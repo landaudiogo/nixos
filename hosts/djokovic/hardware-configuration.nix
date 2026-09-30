@@ -14,19 +14,17 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/dfbfb920-92a6-4414-ae12-5965ae395a17";
+    { device = "/dev/disk/by-uuid/247dda1d-2e70-4f57-9cfc-90244f80665e";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0E73-AA26";
+    { device = "/dev/disk/by-uuid/9BD4-FC40";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/06997961-6f17-47eb-b7b1-73a9f1746fd9"; }
-    ];
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -39,18 +37,18 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  #nvidia configuration
-    services.xserver.videoDrivers = ["nvidia"];
-    hardware.graphics.enable = true;
-    hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = false;
-        powerManagement.finegrained = false;
-        package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
-        open = false; 
-        nvidiaSettings = true;
-    };
-    hardware.nvidia-container-toolkit.enable = true;
-    nixpkgs.config.nvidia.acceptLicense = true;
-    virtualisation.docker.daemon.settings.features.cdi = true;
+  # nvidia configuration
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.graphics.enable = true;
+  hardware.nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+      open = false;
+      nvidiaSettings = true;
+  };
+  hardware.nvidia-container-toolkit.enable = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
+  virtualisation.docker.daemon.settings.features.cdi = true;
 }
