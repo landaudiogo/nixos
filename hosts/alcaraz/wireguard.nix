@@ -13,8 +13,8 @@ in
                 {
                     # federer
                     publicKey = publicKeys.federer; 
-                    allowedIPs = [ "0.0.0.0/0" ];
-                    endpoint = "77.171.239.251:51820";
+                    allowedIPs = [ "10.0.0.0/24" ];
+                    endpoint = "83.87.96.61:51820";
                     persistentKeepalive = 25;
                 }
             ];

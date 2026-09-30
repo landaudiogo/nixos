@@ -4,19 +4,21 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ./wireguard.nix
+    # ./chaosd.nix
+    # ./containerd.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   virtualisation.docker.enable = true;
   virtualisation.docker.daemon.settings = {
     "insecure-registries" = ["federer.ad.dlandau.nl:30002"];
   };
 
+  networking.search = [ "ad.dlandau.nl" ];
   networking.hostName = "alcaraz"; # Define your hostname.
   networking.networkmanager.enable = true;
   networking.networkmanager.dns = "none";
@@ -70,6 +72,30 @@
           User root
           HostName 192.168.2.53
           IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host k8s-master
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 192.168.2.22
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host k8s-worker1
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 192.168.2.23
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host k8s-worker2
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 192.168.2.36
+          IdentityFile ${config.age.secrets.root-ed25519.path}
+        Host k8s-worker3
+          Port 22
+          IdentitiesOnly yes
+          User root
+          HostName 192.168.2.35
+          IdentityFile ${config.age.secrets.root-ed25519.path}
     '';
   };
 
@@ -109,6 +135,9 @@
   ];
 
   programs.zsh.enable = true;
+
+  # temporary
+  programs.nix-ld.enable = true;
 
   system.stateVersion = "22.11"; # Did you read the comment?
 
