@@ -9,5 +9,6 @@
         "anaIpad" = "xfhYdRgHFmNLxpsSBuB2vxeX/33L64mN6q7p58f2Rh4=";
         "ADTV" = "SLRZ1mcnxlVfOKFd2vC4rmqNsAUC92GksKN9w1eHfAM=";
         "nadal" = "9RADuO52dbTsJpeOcWc6o7PYqn9zWWJyWidegbjEtTE=";
+        "workstation" = "/5hfUhLSKJkdob+R3AyNl24dTA4I4TUFE3AifimVzGs=";
     };
 }

@@ -29,12 +29,18 @@
                 };
                 pdnsctl = toolshed.packages.${system}.pdnsctl;
             };
+            pkgs = import nixpkgs { inherit system; };
         in rec {
+            devShells.${system}.default = pkgs.mkShell {
+                packages = [ agenix.outputs.packages.${system}.default ];
+            };
             nixosConfigurations = {
                 djokovic = nixpkgs.lib.nixosSystem {
                     specialArgs = { inherit inputs; };
                     modules = [
-                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        ({ config, pkgs, ... }: { 
+                            nixpkgs.overlays = [ overlay-unstable ]; 
+                        })
                         home-manager.nixosModules.default
                         agenix.nixosModules.default
                         ./modules/nixos
@@ -45,7 +51,10 @@
                 alcaraz = nixpkgs.lib.nixosSystem {
                     specialArgs = { inherit inputs; };
                     modules = [
-                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        ({ config, pkgs, ... }: { 
+                            nixpkgs.overlays = [ overlay-unstable ];
+                            nixpkgs.config.allowUnfree = true;
+                        })
                         home-manager.nixosModules.default
                         agenix.nixosModules.default
                         ./modules/nixos
@@ -72,6 +81,17 @@
                         agenix.nixosModules.default
                         ./modules/nixos
                         ./hosts/sinner/configuration.nix
+                    ];
+                };
+
+                workstation = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = [
+                        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+                        home-manager.nixosModules.default
+                        agenix.nixosModules.default
+                        ./modules/nixos
+                        ./hosts/workstation/configuration.nix
                     ];
                 };
             };

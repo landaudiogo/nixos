@@ -6,6 +6,7 @@ let
     landaudiogo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1COVqebDaCGC+bD3A7MgmFYMf5lMrHDUz+MBUn/oej landaudiogo";
     nadal = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5VXFxQDCqH4tvEIb0q+b5FaMvtecUxPaHb6mWYqc3N nadal";
     root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWjd0HS5ustz5grB4u8vtQcz1aINzESPu1ybrN+u6dy root";
+    workstation = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+DvjtsIv5FZTlm1DVKb8VmRh1D145lEoJm0e2hls7u workstation";
 in
 {
     "djokovic-wireguard.age".publicKeys = [ djokovic ];
@@ -18,13 +19,14 @@ in
     "ana-Iphone-wireguard.age".publicKeys = [ landaudiogo ];
     "ADTV-wireguard.age".publicKeys = [ landaudiogo ];
     "sinner-wireguard.age".publicKeys = [ sinner landaudiogo ];
+    "workstation-wireguard.age".publicKeys = [ workstation landaudiogo ];
 
     "anaIphoneClientCertificate-key.age".publicKeys = [ landaudiogo ];
     "anaIphoneClientCertificate-crt.age".publicKeys = [ landaudiogo ];
  
-    "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer sinner ];
+    "landaudiogo-ed25519.age".publicKeys = [ alcaraz federer sinner workstation landaudiogo ];
     "gijs-rsa.age".publicKeys = [ alcaraz landaudiogo ];
-    "root-ed25519.age".publicKeys = [ alcaraz ];
+    "root-ed25519.age".publicKeys = [ alcaraz workstation landaudiogo ];
 
     "pdns-api-key.age".publicKeys = [ federer landaudiogo ];
     "pdns-env.age".publicKeys = [ federer landaudiogo ];
