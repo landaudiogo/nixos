@@ -102,4 +102,13 @@ in
 
     networking.firewall.allowedTCPPorts = [ 6443 8888 ];
     networking.search = [ "ad.dlandau.nl" ];
+
+    virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".registry = {
+        mirrors = {
+            "federer.ad.dlandau.nl:30002" = {
+                endpoint = [ "http://federer.ad.dlandau.nl:30002" ];
+            };
+        };
+        configs."federer.ad.dlandau.nl:30002".tls.insecure_skip_verify = true;
+    };
 }
