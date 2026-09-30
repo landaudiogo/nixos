@@ -1,4 +1,38 @@
-{ lib, config, ... }: 
+{ pkgs, lib, config, ... }:
+let
+    localPathManifest = pkgs.stdenv.mkDerivation {
+        name = "local-path-manifest";
+
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+        # outputHash = lib.fakeHash;
+        outputHash = "sha256-YCAF+Jrr9Z9qVTr2UbkMLR6LSeF4fvMTa+e+7Go1PdE=";
+
+        buildInputs = with pkgs; [ wget yq jq ];
+
+        dontUnpack = true;
+
+        buildPhase = ''
+            wget --no-check-certificate -O local-path-storage.yaml https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.35/deploy/local-path-storage.yaml
+            yq < local-path-storage.yaml | jq -s > local-path-storage.json
+        '';
+
+        installPhase = ''
+            cp local-path-storage.json $out
+        '';
+    };
+    localPathResources_ = builtins.fromJSON (builtins.readFile localPathManifest);
+    addLabels = item: lib.recursiveUpdate item {
+        metadata = {
+          labels = {
+            "addonmanager.kubernetes.io/mode" = "Reconcile";
+            "kubernetes.io/cluster-service" = "true";
+            "k8s-app" = "kube-storage";
+          };
+        };
+    };
+    localPathResources = builtins.map addLabels localPathResources_;
+in
 {
     services.kubernetes = {
         roles = [ "master" ];
@@ -18,8 +52,17 @@
         controllerManager.extraOpts = "--service-cluster-ip-range=10.43.0.0/16";
         apiserver.serviceClusterIpRange = "10.43.0.0/16";
         apiserver.extraSANs = [ "federer.ad.dlandau.nl" ];
+        apiserver.allowPrivileged = true;
 
         kubelet.extraOpts = "--fail-swap-on=false";
+
+        addonManager.bootstrapAddons = {
+            local-path-storage = {
+                kind = "List";
+                apiVersion = "v1";
+                items = localPathResources;
+            };
+        };
     };
 
     age.secrets.root-ca = {
