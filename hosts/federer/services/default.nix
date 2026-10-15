@@ -4,6 +4,7 @@ let
         url = "https://github.com/user-attachments/files/21853327/static.zip"; 
         sha256 = "sha256-arbg3s/ey3cBi5kigKXWyXkqRA9dWhqykLw2tz8zlts="; 
     };
+    homePublicIP = "84.106.119.23";
 in
 {
     imports = [ 
@@ -28,7 +29,7 @@ in
                 proxyConnection = "10.0.0.5:3122";
                 requireClientCertificate = true;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "83.87.96.61";
+                DNSRecordIP = homePublicIP;
             };
             home-assistant = {
                 recordName = "ha.ad.dlandau.nl";
@@ -39,7 +40,7 @@ in
                 proxyConnection = "10.0.0.5:8123";
                 requireClientCertificate = true;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "83.87.96.61";
+                DNSRecordIP = homePublicIP;
             };
             jellyfin = {
                 recordName = "jellyfin.ad.dlandau.nl";
@@ -77,19 +78,19 @@ in
                 recordName = "timer.ad.dlandau.nl";
                 staticContent = timeLogger;
                 allowRanges = ["0.0.0.0/0"];
-                DNSRecordIP = "83.87.96.61";
+                DNSRecordIP = homePublicIP;
             };
             jvfJellyfin = {
                 recordName = "jellyfin-jvf.ad.dlandau.nl";
-                DNSRecordIP = "192.168.2.9";
+                DNSRecordIP = "192.168.0.36";
                 proxyConnection = "10.0.0.5:8096";
-                allowRanges = [ "192.168.2.28/32" ];
+                allowRanges = [ "192.168.0.0/24" ];
             };
             jvfJellyseerr = {
                 recordName = "jellyseerr-jvf.ad.dlandau.nl";
-                DNSRecordIP = "192.168.2.9";
+                DNSRecordIP = "192.168.0.36";
                 proxyConnection = "10.0.0.5:5055";
-                allowRanges = [ "192.168.2.28/32" ];
+                allowRanges = [ "192.168.0.0/24" ];
             };
         };
     };
