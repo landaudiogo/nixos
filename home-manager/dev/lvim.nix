@@ -1,13 +1,29 @@
 { lib, pkgs, config, inputs, ... }:
 let 
     cfg = config.programs.lvim;
+    pkgs-2411 = import inputs.nixpkgs-2411 { system = pkgs.system; };
+    lvim-unwrapped = pkgs-2411.callPackage "${inputs.nixpkgs-2411}/pkgs/by-name/lu/lunarvim/package.nix" {
+        cargo = pkgs.cargo;
+        stdenv = pkgs.stdenv;
+    };
+    lvim = pkgs.symlinkJoin {
+        name = "lunarvim-fixed";
+        paths = [ lvim-unwrapped ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/lvim \
+            --unset CC \
+            --run 'export CARGO_HOME="$HOME/.local/state/lvim/cargo"'
+        '';
+        meta.mainProgram = "lvim";
+    };
 in
 {
   options = {
     programs.lvim.enable = lib.mkEnableOption "Enable lvim";
   };
   config = lib.mkIf cfg.enable {
-      home.packages = [ inputs.nixpkgs-2411.legacyPackages.${pkgs.system}.lunarvim ];
+      home.packages = [ lvim ];
       home.file."${config.xdg.configHome}/lvim/config.lua" = {
         text = ''
           --[[
