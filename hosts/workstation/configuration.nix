@@ -11,6 +11,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  # head -c4 /dev/urandom | od -A none -t x4
+  networking.hostId = "16d7764d";
+
   virtualisation.docker.enable = true;
   virtualisation.docker.daemon.settings = {
     "insecure-registries" = ["federer.ad.dlandau.nl:30002"];
