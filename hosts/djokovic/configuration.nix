@@ -15,6 +15,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  # head -c4 /dev/urandom | od -A none -t x4
+  networking.hostId = "db9e86d5";
+
   networking.networkmanager.enable = true;
   networking.hostName = "djokovic"; # Define your hostname.
   age.secrets."pdnsctl-ad.dlandau.nl.".file = ../../secrets/pdnsctl-ad.dlandau.nl..age;

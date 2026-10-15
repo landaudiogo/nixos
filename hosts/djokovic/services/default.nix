@@ -3,7 +3,7 @@
     imports = [ 
         ./flatnotes 
         # ./home-assistant 
-        # ./mediaserver 
+        ./mediaserver 
         # ./webcam
         ./vikunja
         ./koffan
